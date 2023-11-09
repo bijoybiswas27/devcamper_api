@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
 const connectDB = require("./config/db");
+require("express-async-errors");
 
 // Load env vars --> in order to use those variables
 dotenv.config({ path: "./config/config.env" });
@@ -21,6 +22,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/api/v1/bootcamps", require("./routes/bootcamps"));
+
+//handling the errors
+app.use(require("./middleware/not-found"));
+app.use(require("./middleware/error-handler"));
 
 const PORT = process.env.PORT || 5000;
 

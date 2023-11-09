@@ -75,4 +75,9 @@ const BootcampSchema = new mongoose.Schema({
   },
 });
 
+BootcampSchema.pre("save", function (next) {
+  this.slug = `${this.name.toLowerCase()}+${Math.random()}`;
+  next();
+});
+
 module.exports = mongoose.model("Bootcamp", BootcampSchema);
